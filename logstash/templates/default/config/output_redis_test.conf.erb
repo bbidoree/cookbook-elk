@@ -1,0 +1,9 @@
+output {
+    redis {
+            host => 'logcachecluster.duapq3.0001.apne1.cache.amazonaws.com'
+            port => 6379
+            data_type => 'list'
+            key => 'milk'
+            codec => 'json'
+        }
+}
