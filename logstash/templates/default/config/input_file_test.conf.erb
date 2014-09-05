@@ -3,3 +3,17 @@ input {
     path => ["/tmp/milk/milk_03193706_prd1.log"]
   }
 }
+
+filter {
+  grok {
+    match => ["message", "%{TIMESTAMP_ISO8601:date} %{LOGLEVEL:loglevel}  %{DATA:category} %{PARENTHESESSTRING:task} %{GREEDYDATA}"]
+    add_tag => "log4j"
+  }
+
+  multiline {
+    tags => ["_grokparsefailure"] # exclude anything we already handled
+    pattern => ".*"
+    what => "previous"
+    add_tag => "notgrok"
+  }
+}
